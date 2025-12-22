@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.revup.revup.entity.enums.UsuarioRole;
 import br.com.revup.revup.exceptions.RecursoDuplicadoException;
+import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -42,6 +43,6 @@ public class Usuario {
 
     public void removerVeiculo(Veiculo veiculo) {
         if (!veiculos.remove(veiculo))
-            throw new RecursoDuplicadoException("O veículo com placa " + veiculo.getPlaca() + " não pertence a este usuário.");
+            throw new RecursoNaoEncontradoException("O veículo com placa " + veiculo.getPlaca() + " não pertence a este usuário.");
     }
 }
