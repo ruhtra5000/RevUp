@@ -1,5 +1,6 @@
 package br.com.revup.revup.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.revup.revup.entity.enums.UsuarioRole;
@@ -13,10 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Usuario {
     // Atributos
     @Id
@@ -35,6 +38,16 @@ public class Usuario {
 
     @OneToMany
     private List<Veiculo> veiculos;
+
+    // Construtores
+    public Usuario (String nome, String email, String senha, String cpf) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.role = UsuarioRole.USUARIO;
+        this.veiculos = new ArrayList<>();
+    }
 
     // Métodos
     public void adicionarVeiculo(Veiculo veiculo) {
