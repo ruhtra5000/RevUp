@@ -20,6 +20,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>,
                                            QuerydslBinderCustomizer<QUsuario>
 {
 	Optional<Usuario> findByEmail(String email);
+	
+	Optional<Usuario> findByEmailAndSenha(String email, String senha);
     
     @Override
     default void customize(QuerydslBindings bindings, QUsuario root) {
