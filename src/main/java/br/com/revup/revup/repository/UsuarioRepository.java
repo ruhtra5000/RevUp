@@ -1,5 +1,7 @@
 package br.com.revup.revup.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -17,6 +19,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>,
                                            QuerydslPredicateExecutor<Usuario>,
                                            QuerydslBinderCustomizer<QUsuario>
 {
+	Optional<Usuario> findByEmail(String email);
+    
     @Override
     default void customize(QuerydslBindings bindings, QUsuario root) {
         // Bind para ID
