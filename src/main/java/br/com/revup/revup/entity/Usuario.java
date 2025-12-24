@@ -6,6 +6,8 @@ import br.com.revup.revup.entity.enums.UsuarioRole;
 import br.com.revup.revup.exceptions.RecursoDuplicadoException;
 import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -28,6 +30,7 @@ public class Usuario {
     @Setter(AccessLevel.NONE)
     private String cpf;
 
+    @Enumerated(EnumType.STRING)
     private UsuarioRole role;
 
     @OneToMany
