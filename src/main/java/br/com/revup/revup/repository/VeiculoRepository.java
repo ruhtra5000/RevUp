@@ -1,5 +1,7 @@
 package br.com.revup.revup.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,7 +29,13 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long>,
                  "JOIN usuario_veiculos uv ON uv.veiculo_id = v.id " +
                  "WHERE uv.usuario_id = :idUsuario"
     )
-    Page<Veiculo> findVeiculosByUsuarioId(@Param("idUsuario") long idUsuario, Pageable pageable);
+    Page<Veiculo> findAllVeiculosByUsuarioId(@Param("idUsuario") long idUsuario, Pageable pageable);
+
+    Optional<Veiculo> findByPlaca(String placa);
+
+    Optional<Veiculo> findByChassi(String chassi);
+
+    Optional<Veiculo> findByRenavam(String renavam);
 
     @Override
     default void customize(QuerydslBindings bindings, QVeiculo root) {
