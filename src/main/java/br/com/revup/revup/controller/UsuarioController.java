@@ -56,7 +56,6 @@ public class UsuarioController {
         );
     }
 
-    // CONSERTAR ROTA DE FILTRO
     @GetMapping("/filtro") 
     public ResponseEntity<Page<UsuarioResponse>> listarUsuariosFiltro (@QuerydslPredicate(root = Usuario.class) Predicate predicate, Pageable pageable) {
         return new ResponseEntity<Page<UsuarioResponse>>(
