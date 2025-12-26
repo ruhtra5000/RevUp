@@ -33,24 +33,18 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long>,
     default void customize(QuerydslBindings bindings, QVeiculo root) {
         // Bind para ID
         bindings.bind(root.id)
-                .as("id")
                 .first((NumberPath<Long> path, Long value) -> path.eq(value));
 
         // Bind para placa
         bindings.bind(root.placa)
-                .as("placa")
                 .first((StringPath path, String value) -> path.containsIgnoreCase(value));
 
         // Bind para número do chassi
         bindings.bind(root.chassi)
-                .as("chassi")
                 .first((StringPath path, String value) -> path.containsIgnoreCase(value));
         
         // Bind para renavam
         bindings.bind(root.renavam)
-                .as("renavam")
                 .first((StringPath path, String value) -> path.containsIgnoreCase(value));
-
-        bindings.excludeUnlistedProperties(true);
     }
 }

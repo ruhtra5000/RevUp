@@ -24,7 +24,6 @@ public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>,
     default void customize(QuerydslBindings bindings, QManutencao root) {
         // Bind para ID
         bindings.bind(root.id)
-                .as("id")
                 .first((NumberPath<Long> path, Long value) -> path.eq(value));
 
         // Bind para Veiculo (ID)
@@ -34,7 +33,6 @@ public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>,
 
         // Bind para data
         bindings.bind(root.data)
-                .as("data")
                 .all((path, values) -> {
                     Iterator<? extends LocalDate> it = values.iterator();
 
@@ -52,7 +50,5 @@ public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>,
 
                     return Optional.empty();
                 });
-
-        bindings.excludeUnlistedProperties(true);
     }
 }
