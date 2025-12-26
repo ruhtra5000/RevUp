@@ -10,10 +10,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Veiculo {
     // Atributos
     @Id
@@ -39,6 +41,20 @@ public class Veiculo {
     private BigDecimal kmTotal;
     private BigDecimal consumoMedio;
 
+    // Construtor
+    public Veiculo(String placa, String chassi, String renavam, TipoVeiculo tipo, String marca, 
+                   String modelo, int ano, String cor, BigDecimal kmTotal) {
+        this.placa = placa;
+        this.chassi = chassi;
+        this.renavam = renavam;
+        this.tipo = tipo;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.cor = cor;
+        this.kmTotal = kmTotal;
+    }
+    
     // Métodos
     public void adicionarKm(int km) {
         this.kmTotal.add(new BigDecimal(km));
