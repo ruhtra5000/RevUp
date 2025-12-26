@@ -40,7 +40,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>,
         // Bind para CPF
         bindings.bind(root.cpf)
                 .first((StringPath path, String value) -> path.containsIgnoreCase(value));
-
-        bindings.excludeUnlistedProperties(true);
     }
 }

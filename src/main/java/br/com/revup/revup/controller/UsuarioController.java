@@ -58,6 +58,8 @@ public class UsuarioController {
 
     @GetMapping("/filtro") 
     public ResponseEntity<Page<UsuarioResponse>> listarUsuariosFiltro (@QuerydslPredicate(root = Usuario.class) Predicate predicate, Pageable pageable) {
+        System.out.println("\n\npredicate: " + predicate + "\n\n");
+
         return new ResponseEntity<Page<UsuarioResponse>>(
             usuarioService.listarUsuariosFiltro(predicate, pageable),
             HttpStatus.OK
