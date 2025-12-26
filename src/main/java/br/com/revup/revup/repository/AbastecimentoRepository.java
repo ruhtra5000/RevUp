@@ -2,6 +2,7 @@ package br.com.revup.revup.repository;
 
 import java.time.LocalDate;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,8 @@ public interface AbastecimentoRepository extends JpaRepository<Abastecimento, Lo
                                                  QuerydslPredicateExecutor<Abastecimento>,
                                                  QuerydslBinderCustomizer<QAbastecimento>
 {
+    List<Abastecimento> findAllByVeiculoId(long veiculoId);
+
     @Override
     default void customize(QuerydslBindings bindings, QAbastecimento root) {
         // Bind para ID
