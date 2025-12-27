@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.revup.revup.entity.enums.UsuarioRole;
-import br.com.revup.revup.exceptions.RecursoDuplicadoException;
+import br.com.revup.revup.exceptions.EstadoInvalidoException;
 import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -52,7 +52,7 @@ public class Usuario {
     // Métodos
     public void adicionarVeiculo(Veiculo veiculo) {
         if (veiculos.contains(veiculo))
-            throw new RecursoDuplicadoException("O veículo com placa " + veiculo.getPlaca() + " já se encontra vinculado a este usuário.");
+            throw new EstadoInvalidoException("O veículo com placa " + veiculo.getPlaca() + " já se encontra vinculado a este usuário.");
     
         veiculos.add(veiculo);
     }
