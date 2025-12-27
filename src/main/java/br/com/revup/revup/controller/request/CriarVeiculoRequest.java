@@ -11,38 +11,38 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record CriarVeiculoRequest(
-    @NotNull(message = "O campo \"idUsuario\" é obrigatório.")
+    @NotNull(message = "O campo 'idUsuario' é obrigatório.")
     long idUsuario,
 
-    @NotBlank(message = "O campo \"placa\" é obrigatório.")
+    @NotBlank(message = "O campo 'placa' é obrigatório.")
     @Pattern(regexp = "^[A-Z]{3}\\d[A-Z]\\d{2}$|^[A-Z]{3}\\d{4}$", message = "Placa inválida.")
     String placa,
 
-    @NotBlank(message = "O campo \"chassi\" é obrigatório.")
+    @NotBlank(message = "O campo 'chassi' é obrigatório.")
     @Pattern(regexp = "^[A-HJ-NPR-Z0-9]{17}$", message = "Número de chassi inválido.")
     String chassi,
 
-    @NotBlank(message = "O campo \"renavam\" é obrigatório.")
+    @NotBlank(message = "O campo 'renavam' é obrigatório.")
     @Pattern(regexp = "^\\d{11}$", message = "RENAVAM inválido.")
     String renavam,
 
-    @NotNull(message = "O campo \"tipo\" é obrigatório.")
+    @NotNull(message = "O campo 'tipo' é obrigatório.")
     TipoVeiculo tipo,
 
-    @NotBlank(message = "O campo \"marca\" é obrigatório.")
+    @NotBlank(message = "O campo 'marca' é obrigatório.")
     String marca,
 
-    @NotBlank(message = "O campo \"modelo\" é obrigatório.")
+    @NotBlank(message = "O campo 'modelo' é obrigatório.")
     String modelo,
 
-    @NotNull(message = "O campo \"ano\" é obrigatório.")
+    @NotNull(message = "O campo 'ano' é obrigatório.")
     @AnoFabricacao
     int ano,
 
-    @NotBlank(message = "O campo \"cor\" é obrigatório.")
+    @NotBlank(message = "O campo 'cor' é obrigatório.")
     String cor,
 
-    @NotNull(message = "O campo \"kmTotal\" é obrigatório.")
+    @NotNull(message = "O campo 'kmTotal' é obrigatório.")
     @Min(value = 0, message = "A quilometragem mínima é 0 km.")
     BigDecimal kmTotal
 ) {
