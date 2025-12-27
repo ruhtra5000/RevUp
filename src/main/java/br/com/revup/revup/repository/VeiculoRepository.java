@@ -26,10 +26,15 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long>,
 
     @NativeQuery("SELECT v.* " + 
                  "FROM veiculo v " + 
-                 "JOIN usuario_veiculos uv ON uv.veiculo_id = v.id " +
+                 "JOIN usuario_veiculos uv ON uv.veiculos_id = v.id " +
                  "WHERE uv.usuario_id = :idUsuario"
     )
     Page<Veiculo> findAllVeiculosByUsuarioId(@Param("idUsuario") long idUsuario, Pageable pageable);
+
+    @NativeQuery("select usuario_id " +
+                 "from usuario_veiculos " + 
+                 "where veiculos_id = :idVeiculo")
+    long findUsuarioIdByVeiculoId(@Param("idVeiculo") long idVeiculo);
 
     Optional<Veiculo> findByPlaca(String placa);
 
