@@ -100,7 +100,9 @@ public class VeiculoServiceImpl implements VeiculoService {
     public void deletarVeiculo(long idVeiculo) {
         Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
 
-        // Talvez precise usar "removerVeiculo" de UsuarioService
+        long idUsuario = veiculoRepository.findUsuarioIdByVeiculoId(idVeiculo);
+
+        usuarioService.removerVeiculo(idUsuario, veiculo);
 
         veiculoRepository.delete(veiculo);
     }
