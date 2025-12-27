@@ -47,8 +47,8 @@ public class Abastecimento {
     private BigDecimal kmPorLitro;
 
     // Setter
-    public void setKmComTanque(int kmComTanque) {
-        this.kmComTanque = new BigDecimal(kmComTanque);
+    public void setKmComTanque(BigDecimal kmComTanque) {
+        this.kmComTanque = kmComTanque;
         calcularKmPorLitro();
     }
 
