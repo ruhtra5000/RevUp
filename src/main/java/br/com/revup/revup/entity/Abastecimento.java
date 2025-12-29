@@ -1,6 +1,7 @@
 package br.com.revup.revup.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import br.com.revup.revup.entity.enums.TipoCombustivel;
@@ -15,10 +16,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Abastecimento {
     // Atributos
     @Id
@@ -46,6 +49,15 @@ public class Abastecimento {
     @Setter(AccessLevel.NONE)
     private BigDecimal kmPorLitro;
 
+    // Construtores
+    public Abastecimento(Veiculo veiculo, TipoCombustivel combustivel, BigDecimal litros, LocalDate data, BigDecimal kmComTanque) {
+        this.veiculo = veiculo;
+        this.combustivel = combustivel;
+        this.litros = litros;
+        this.data = data;
+        this.kmComTanque = kmComTanque;
+    }
+
     // Setter
     public void setKmComTanque(BigDecimal kmComTanque) {
         this.kmComTanque = kmComTanque;
@@ -54,6 +66,6 @@ public class Abastecimento {
 
     // Métodos
     public void calcularKmPorLitro() {
-        this.kmPorLitro = this.kmComTanque.divide(this.litros);
+        this.kmPorLitro = this.kmComTanque.divide(this.litros, 2, RoundingMode.HALF_UP);
     }
 }
