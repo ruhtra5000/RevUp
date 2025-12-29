@@ -1,6 +1,7 @@
 package br.com.revup.revup.service.implementation;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -133,7 +134,7 @@ public class VeiculoServiceImpl implements VeiculoService {
             
             BigDecimal tamanho = new BigDecimal(abastecimentos.size());
             
-            veiculo.setConsumoMedio(somaKmPorLitro.divide(tamanho));
+            veiculo.setConsumoMedio(somaKmPorLitro.divide(tamanho, 2, RoundingMode.HALF_UP));
         }
 
         veiculoRepository.save(veiculo);
