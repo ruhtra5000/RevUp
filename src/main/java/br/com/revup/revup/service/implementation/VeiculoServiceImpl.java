@@ -130,7 +130,7 @@ public class VeiculoServiceImpl implements VeiculoService {
         else {
             BigDecimal somaKmPorLitro = BigDecimal.ZERO;
             for (Abastecimento abastecimento : abastecimentos) 
-                somaKmPorLitro.add(abastecimento.getKmPorLitro());
+                somaKmPorLitro = somaKmPorLitro.add(abastecimento.getKmPorLitro());
             
             BigDecimal tamanho = new BigDecimal(abastecimentos.size());
             
