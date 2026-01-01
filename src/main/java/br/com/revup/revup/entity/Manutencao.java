@@ -11,9 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Manutencao {
     // Atributos
     @Id
@@ -35,4 +37,14 @@ public class Manutencao {
     private BigDecimal valor;
     private LocalDate data;
     private BigDecimal quilometragem;
+
+    // Construtor
+    public Manutencao(Veiculo veiculo, String servico, BigDecimal valor, LocalDate data, BigDecimal quilometragem) {
+        this.veiculo = veiculo;
+        this.servico = servico;
+        this.valor = valor;
+        this.data = data;
+        this.quilometragem = quilometragem;
+    }
+    
 }
