@@ -10,9 +10,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Lavagem {
     // Atributos
     @Id
@@ -32,4 +34,12 @@ public class Lavagem {
 
     private String detalhes;
     private LocalDate data;
+
+    // Construtor
+    public Lavagem(Veiculo veiculo, String detalhes, LocalDate data) {
+        this.veiculo = veiculo;
+        this.detalhes = detalhes;
+        this.data = data;
+    }
+
 }
