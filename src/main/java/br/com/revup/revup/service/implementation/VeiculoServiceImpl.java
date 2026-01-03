@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
 
@@ -98,6 +99,7 @@ public class VeiculoServiceImpl implements VeiculoService {
     }
 
     @Override
+    @Transactional
     public void deletarVeiculo(long idVeiculo) {
         Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
 
@@ -110,6 +112,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 
     // Dono
     @Override
+    @Transactional
     public void alterarDono(long idVeiculo, long idAntigoDono, long idNovoDono) {
         Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
 

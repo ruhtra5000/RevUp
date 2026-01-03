@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
 
@@ -125,6 +126,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     // Autenticação
     @Override
+    @Transactional
     public void autenticarUsuario(AutenticacaoRequest dto) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(dto.email());
 
