@@ -1,21 +1,24 @@
 package br.com.revup.revup.entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.revup.revup.entity.enums.TipoVeiculo;
+import br.com.revup.revup.exceptions.EstadoInvalidoException;
+import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class Veiculo {
     // Atributos
     @Id
@@ -41,7 +44,14 @@ public class Veiculo {
     private BigDecimal kmTotal;
     private BigDecimal consumoMedio;
 
-    // Construtor
+    @OneToMany
+    private List<Imagem> imagens;
+
+    // Construtores
+    public Veiculo () {
+        this.imagens = new ArrayList<Imagem>(3);
+    }
+
     public Veiculo(String placa, String chassi, String renavam, TipoVeiculo tipo, String marca, 
                    String modelo, int ano, String cor, BigDecimal kmTotal) {
         this.placa = placa;
@@ -53,10 +63,29 @@ public class Veiculo {
         this.ano = ano;
         this.cor = cor;
         this.kmTotal = kmTotal;
+        this.imagens = new ArrayList<Imagem>(3);
     }
     
     // Métodos
     public void adicionarKm(int km) {
         this.kmTotal.add(new BigDecimal(km));
+    }
+
+    public void adicionarImagem (Imagem imagem) {
+        if (imagens.size() >= 3)
+            throw new EstadoInvalidoException("Cada veículo suporta até 3 imagens.");
+
+        imagens.add(imagem);
+    }
+
+    public void removerImagem (long idImagem) {
+        for (Imagem imagem : imagens) {
+            if (imagem.getId() == idImagem) {
+                imagens.remove(imagem);
+                return;
+            }
+        }
+
+        throw new RecursoNaoEncontradoException("A imagem com id " + idImagem + " não existe ou não está vinculada ao veículo com placa " + placa);
     }
 }
