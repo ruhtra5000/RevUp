@@ -7,11 +7,13 @@ import java.util.List;
 import br.com.revup.revup.entity.enums.TipoVeiculo;
 import br.com.revup.revup.exceptions.EstadoInvalidoException;
 import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -44,7 +46,8 @@ public class Veiculo {
     private BigDecimal kmTotal;
     private BigDecimal consumoMedio;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "veiculo_id")
     private List<Imagem> imagens;
 
     // Construtores
