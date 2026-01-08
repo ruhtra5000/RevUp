@@ -1,13 +1,18 @@
 package br.com.revup.revup.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.querydsl.core.types.Predicate;
 
@@ -84,6 +89,35 @@ public class VeiculoController {
 
         return new ResponseEntity<String>(
             "Veiculo com id " + id + " deletado com sucesso.",
+            HttpStatus.OK
+        );
+    }
+
+    // Imagens
+    @PostMapping("/{id}/adicionarImagem")
+    public ResponseEntity<String> adicionarImagem (@PathVariable long id, @RequestParam("file") MultipartFile file) {
+        veiculoService.adicionarImagem(id, file);
+
+        return new ResponseEntity<String>(
+            "Imagem " + file.getOriginalFilename() + " adicionada Veiculo com id " + id + " com sucesso.",
+            HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/{id}/imagens")
+    public ResponseEntity<List<Resource>> listarImagem (@PathVariable long id) {
+        return new ResponseEntity<List<Resource>>(
+            veiculoService.listarImagensPorVeiculo(id),
+            HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping("/{idVeiculo}/removerImagem/{idImagem}")
+    public ResponseEntity<String> removerImagem (@PathVariable long idVeiculo, @PathVariable long idImagem) {
+        veiculoService.removerImagem(idVeiculo, idImagem);
+
+        return new ResponseEntity<String>(
+            "Imagem com id " + idImagem + " removida Veiculo com id " + idVeiculo + " com sucesso.",
             HttpStatus.OK
         );
     }
