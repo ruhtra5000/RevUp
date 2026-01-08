@@ -3,7 +3,6 @@ package br.com.revup.revup.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -19,6 +18,7 @@ import com.querydsl.core.types.Predicate;
 import br.com.revup.revup.controller.request.AlteracaoDonoRequest;
 import br.com.revup.revup.controller.request.CriarVeiculoRequest;
 import br.com.revup.revup.controller.request.EditarVeiculoRequest;
+import br.com.revup.revup.controller.response.ImagemResponse;
 import br.com.revup.revup.entity.Veiculo;
 import br.com.revup.revup.service.VeiculoService;
 import jakarta.validation.Valid;
@@ -105,8 +105,8 @@ public class VeiculoController {
     }
 
     @GetMapping("/{id}/imagens")
-    public ResponseEntity<List<Resource>> listarImagem (@PathVariable long id) {
-        return new ResponseEntity<List<Resource>>(
+    public ResponseEntity<List<ImagemResponse>> listarImagem (@PathVariable long id) {
+        return new ResponseEntity<List<ImagemResponse>>(
             veiculoService.listarImagensPorVeiculo(id),
             HttpStatus.OK
         );

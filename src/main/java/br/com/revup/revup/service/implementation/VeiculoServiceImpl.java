@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.querydsl.core.types.Predicate;
 
+import br.com.revup.revup.controller.response.ImagemResponse;
 import br.com.revup.revup.entity.Abastecimento;
 import br.com.revup.revup.entity.Imagem;
 import br.com.revup.revup.entity.Veiculo;
@@ -84,6 +85,15 @@ public class VeiculoServiceImpl implements VeiculoService {
         path = path + "/" + nomeArquivo;                    // Nome do arquivo
 
         return path;
+    }
+
+    private List<ImagemResponse> paraDTOList (List<Imagem> imagens, List<Resource> recursos) {
+        List<ImagemResponse> response = new ArrayList<>();
+        
+        for (int i = 0; i < imagens.size(); i++) 
+            response.add(ImagemResponse.paraDTO(imagens.get(i), recursos.get(i)));
+        
+        return response;
     }
 
     // Operações Básicas
@@ -155,14 +165,16 @@ public class VeiculoServiceImpl implements VeiculoService {
     }
 
     @Override
-    public List<Resource> listarImagensPorVeiculo(long idVeiculo) {
+    public List<ImagemResponse> listarImagensPorVeiculo(long idVeiculo) {
         Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
         List<String> paths = new ArrayList<String>();
         
         for (Imagem imagem : veiculo.getImagens()) 
             paths.add(imagem.getPath());
         
-        return imagemService.listarImagem(paths);
+        List<Resource> recursos = imagemService.listarImagem(paths);
+
+        return paraDTOList(veiculo.getImagens(), recursos);
     }
 
     @Override
