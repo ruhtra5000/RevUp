@@ -2,25 +2,31 @@ package br.com.revup.revup.service.implementation;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.querydsl.core.types.Predicate;
 
 import br.com.revup.revup.entity.Abastecimento;
+import br.com.revup.revup.entity.Imagem;
 import br.com.revup.revup.entity.Veiculo;
 import br.com.revup.revup.exceptions.RecursoDuplicadoException;
 import br.com.revup.revup.exceptions.RecursoNaoEncontradoException;
 import br.com.revup.revup.repository.AbastecimentoRepository;
 import br.com.revup.revup.repository.VeiculoRepository;
+import br.com.revup.revup.service.ImagemService;
 import br.com.revup.revup.service.UsuarioService;
 import br.com.revup.revup.service.VeiculoService;
+import io.github.cdimascio.dotenv.Dotenv;
 
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
@@ -34,6 +40,12 @@ public class VeiculoServiceImpl implements VeiculoService {
     // Outros Services
     @Autowired 
     private UsuarioService usuarioService;
+
+    @Autowired
+    private ImagemService imagemService;
+
+    // Dotenv
+    private Dotenv dotenv = Dotenv.load();
 
     // Métodos Auxiliares
     private Veiculo buscarVeiculoPorId(long idVeiculo) {
@@ -58,6 +70,20 @@ public class VeiculoServiceImpl implements VeiculoService {
 
         if (veiculoRepository.findByRenavam(renavam).isPresent())
             throw new RecursoDuplicadoException("O RENAVAM " + renavam + " já está associado a outro veículo.");
+    }
+
+    private String gerarPathImagemVeiculoDiretorio () {
+        String path = dotenv.get("STORAGE_DIR");    // Diretório
+        path = path + "/veiculo";                       // Sub-diretório
+
+        return path;
+    }
+
+    private String gerarPathImagemVeiculoCompleto (String nomeArquivo) {
+        String path = gerarPathImagemVeiculoDiretorio();    // Diretório completo
+        path = path + "/" + nomeArquivo;                    // Nome do arquivo
+
+        return path;
     }
 
     // Operações Básicas
@@ -108,6 +134,55 @@ public class VeiculoServiceImpl implements VeiculoService {
         usuarioService.removerVeiculo(idUsuario, veiculo);
 
         veiculoRepository.delete(veiculo);
+    }
+
+    // Imagens
+    @Override
+    @Transactional
+    public void adicionarImagem(long idVeiculo, MultipartFile file) {
+        Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
+
+        String nomeArquivo = imagemService.salvarImagem(file, gerarPathImagemVeiculoDiretorio());
+
+        Imagem imagem = new Imagem(
+            gerarPathImagemVeiculoCompleto(nomeArquivo),
+            nomeArquivo,
+            file.getContentType()
+        );
+
+        veiculo.adicionarImagem(imagem);
+        veiculoRepository.save(veiculo);
+    }
+
+    @Override
+    public List<Resource> listarImagensPorVeiculo(long idVeiculo) {
+        Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
+        List<String> paths = new ArrayList<String>();
+        
+        for (Imagem imagem : veiculo.getImagens()) 
+            paths.add(imagem.getPath());
+        
+        return imagemService.listarImagem(paths);
+    }
+
+    @Override
+    @Transactional
+    public void removerImagem(long idVeiculo, long idImagem) {
+        Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
+
+        for (Imagem imagem : veiculo.getImagens()) {
+            if (imagem.getId() == idImagem) {
+                imagemService.removerImagem(imagem.getPath());
+                veiculo.removerImagem(imagem);
+                veiculoRepository.save(veiculo);
+                return;
+            }
+        }
+
+        throw new RecursoNaoEncontradoException(
+            "A imagem com id " + idImagem + 
+            " não existe ou não está vinculada ao veículo com placa " + 
+            veiculo.getPlaca());
     }
 
     // Dono
