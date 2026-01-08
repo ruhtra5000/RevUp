@@ -78,14 +78,8 @@ public class Veiculo {
         imagens.add(imagem);
     }
 
-    public void removerImagem (long idImagem) {
-        for (Imagem imagem : imagens) {
-            if (imagem.getId() == idImagem) {
-                imagens.remove(imagem);
-                return;
-            }
-        }
-
-        throw new RecursoNaoEncontradoException("A imagem com id " + idImagem + " não existe ou não está vinculada ao veículo com placa " + placa);
+    public void removerImagem (Imagem imagem) {
+        if (!imagens.remove(imagem)) 
+            throw new RecursoNaoEncontradoException("A imagem com id " + imagem.getId() + " não existe ou não está vinculada ao veículo com placa " + placa);
     }
 }
