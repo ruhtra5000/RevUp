@@ -143,6 +143,9 @@ public class VeiculoServiceImpl implements VeiculoService {
 
         usuarioService.removerVeiculo(idUsuario, veiculo);
 
+        // Remoção das imagens do disco
+        removerTodasImagens(idVeiculo);
+
         veiculoRepository.delete(veiculo);
     }
 
@@ -195,6 +198,20 @@ public class VeiculoServiceImpl implements VeiculoService {
             "A imagem com id " + idImagem + 
             " não existe ou não está vinculada ao veículo com placa " + 
             veiculo.getPlaca());
+    }
+
+    @Override
+    @Transactional
+    public void removerTodasImagens (long idVeiculo) { // Remove todas as imagens dum veiculo
+        Veiculo veiculo = buscarVeiculoPorId(idVeiculo);
+        List<Imagem> imgs = veiculo.getImagens();
+
+        for (int i = 0; i < imgs.size(); i++) {
+            imagemService.removerImagem(imgs.get(i).getPath());
+            veiculo.removerImagem(imgs.get(i));
+        }
+
+        veiculoRepository.save(veiculo);
     }
 
     // Dono

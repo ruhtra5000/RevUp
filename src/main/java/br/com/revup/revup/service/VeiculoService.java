@@ -23,6 +23,7 @@ public interface VeiculoService {
     public void adicionarImagem (long idVeiculo, MultipartFile file);
     public List<ImagemResponse> listarImagensPorVeiculo (long idVeiculo);
     public void removerImagem(long idVeiculo, long idImagem);
+    public void removerTodasImagens (long idVeiculo);
     // Dono
     public void alterarDono(long idVeiculo, long idAntigoDono, long idNovoDono);
     // Consumo médio
