@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
-import org.springframework.stereotype.Repository;
 
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
@@ -14,7 +13,6 @@ import com.querydsl.core.types.dsl.StringPath;
 import br.com.revup.revup.entity.QUsuario;
 import br.com.revup.revup.entity.Usuario;
 
-@Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>,
                                            QuerydslPredicateExecutor<Usuario>,
                                            QuerydslBinderCustomizer<QUsuario>

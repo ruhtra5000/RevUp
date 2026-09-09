@@ -10,15 +10,12 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
 
 import br.com.revup.revup.entity.QVeiculo;
 import br.com.revup.revup.entity.Veiculo;
 
-@Repository
 public interface VeiculoRepository extends JpaRepository<Veiculo, Long>,
                                            QuerydslPredicateExecutor<Veiculo>,
                                            QuerydslBinderCustomizer<QVeiculo>

@@ -8,14 +8,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
-import org.springframework.stereotype.Repository;
-
 import com.querydsl.core.types.dsl.NumberPath;
 
 import br.com.revup.revup.entity.Manutencao;
 import br.com.revup.revup.entity.QManutencao;
 
-@Repository
 public interface ManutencaoRepository extends JpaRepository<Manutencao, Long>,
                                               QuerydslPredicateExecutor<Manutencao>,
                                               QuerydslBinderCustomizer<QManutencao>
