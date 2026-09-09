@@ -1,6 +1,5 @@
 package br.com.revup.revup.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -34,8 +33,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UsuarioController {
     
     // Services
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    UsuarioController (UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     // Operações Básicas
     @PostMapping

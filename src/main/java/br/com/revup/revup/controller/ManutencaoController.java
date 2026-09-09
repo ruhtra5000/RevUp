@@ -1,6 +1,5 @@
 package br.com.revup.revup.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -29,8 +28,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/manutencao")
 public class ManutencaoController {
     // Service
-    @Autowired
-    private ManutencaoService manutencaoService;
+    private final ManutencaoService manutencaoService;
+
+    ManutencaoController (ManutencaoService manutencaoService) {
+        this.manutencaoService = manutencaoService;
+    }
 
     // Rotas
     @PostMapping

@@ -1,6 +1,5 @@
 package br.com.revup.revup.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -30,8 +29,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/lavagem")
 public class LavagemController {
     // Service
-    @Autowired
-    private LavagemService lavagemService;
+    private final LavagemService lavagemService;
+
+    LavagemController (LavagemService lavagemService) {
+        this.lavagemService = lavagemService;
+    }
 
     @PostMapping
     public ResponseEntity<String> criarLavagem (@RequestBody @Valid CriarLavagemRequest dto) {

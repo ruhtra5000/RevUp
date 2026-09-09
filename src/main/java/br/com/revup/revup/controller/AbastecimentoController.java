@@ -1,6 +1,5 @@
 package br.com.revup.revup.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -29,8 +28,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/abastecimento")
 public class AbastecimentoController {
     // Service
-    @Autowired
-    private AbastecimentoService abastecimentoService;
+    private final AbastecimentoService abastecimentoService;
+
+    AbastecimentoController (AbastecimentoService abastecimentoService) {
+        this.abastecimentoService = abastecimentoService;
+    }
 
     @PostMapping
     public ResponseEntity<String> criarAbastecimento (@RequestBody @Valid CriarAbastecimentoRequest dto) {

@@ -2,7 +2,6 @@ package br.com.revup.revup.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -35,8 +34,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/veiculo")
 public class VeiculoController {
     // Services
-    @Autowired
-    private VeiculoService veiculoService;
+    private final VeiculoService veiculoService;
+
+    VeiculoController (VeiculoService veiculoService) {
+        this.veiculoService = veiculoService;
+    }
 
     // Operações Básicas
     @PostMapping
