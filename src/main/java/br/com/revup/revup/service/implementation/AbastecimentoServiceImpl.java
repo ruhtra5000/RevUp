@@ -2,7 +2,6 @@ package br.com.revup.revup.service.implementation;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,15 @@ import br.com.revup.revup.service.VeiculoService;
 @Service
 public class AbastecimentoServiceImpl implements AbastecimentoService {
     // Repositórios
-    @Autowired
-    private AbastecimentoRepository abastecimentoRepository;
+    private final AbastecimentoRepository abastecimentoRepository;
 
     // Outros Services
-    @Autowired
-    private VeiculoService veiculoService;
+    private final VeiculoService veiculoService;
+
+    AbastecimentoServiceImpl(AbastecimentoRepository abastecimentoRepository, VeiculoService veiculoService) {
+        this.abastecimentoRepository = abastecimentoRepository;
+        this.veiculoService = veiculoService;
+    }
 
     // Métodos auxiliares
     private Abastecimento buscarAbastecimentoPorId(long idAbastecimento) {

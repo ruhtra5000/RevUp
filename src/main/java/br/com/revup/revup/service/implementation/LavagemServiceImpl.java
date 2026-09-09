@@ -2,7 +2,6 @@ package br.com.revup.revup.service.implementation;
 
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,11 @@ import br.com.revup.revup.service.LavagemService;
 @Service
 public class LavagemServiceImpl implements LavagemService {
     // Repositórios
-    @Autowired
-    private LavagemRepository lavagemRepository;
+    private final LavagemRepository lavagemRepository;
+
+    LavagemServiceImpl(LavagemRepository lavagemRepository) {
+        this.lavagemRepository = lavagemRepository;
+    }
 
     // Métodos auxiliares
     private Lavagem buscarLavagemPorId (long id) {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,21 +31,24 @@ import io.github.cdimascio.dotenv.Dotenv;
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
     // Repositórios
-    @Autowired
-    private VeiculoRepository veiculoRepository;
-
-    @Autowired
-    private AbastecimentoRepository abastecimentoRepository;
+    private final VeiculoRepository veiculoRepository;
+    private final AbastecimentoRepository abastecimentoRepository;
 
     // Outros Services
-    @Autowired 
-    private UsuarioService usuarioService;
-
-    @Autowired
-    private ImagemService imagemService;
+    private final UsuarioService usuarioService;
+    private final ImagemService imagemService;
 
     // Dotenv
     private Dotenv dotenv = Dotenv.load();
+
+    VeiculoServiceImpl(VeiculoRepository veiculoRepository, AbastecimentoRepository abastecimentoRepository, 
+                       UsuarioService usuarioService, ImagemService imagemService) 
+    {
+        this.veiculoRepository = veiculoRepository;
+        this.abastecimentoRepository = abastecimentoRepository;
+        this.usuarioService = usuarioService;
+        this.imagemService = imagemService;
+    }
 
     // Métodos Auxiliares
     private Veiculo buscarVeiculoPorId(long idVeiculo) {
